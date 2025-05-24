@@ -1,10 +1,19 @@
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-
+import ModalAddNew from "./ModalAddNew";
 import { fetchAllUser } from "../services/UserService";
 
 const TableUsers = (props) => {
   const [listUsers, setListUsers] = useState([]);
+  const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
+
+  const handleClose = () => {
+    setIsShowModalAddNew(false);
+  };
+
+  const handleUpdateTable = (user) => {
+    setListUsers([...listUsers, user]);
+  };
 
   useEffect(() => {
     // call apis
@@ -13,15 +22,27 @@ const TableUsers = (props) => {
 
   const getUsers = async () => {
     let res = await fetchAllUser();
-    console.log("🚀 ~ getUsers ~ res:", res);
 
-    if (res && res.data && res.data) {
+    if (res && res.data) {
+      // setTotalUsers(res.total);
+      // setTotalPages(res.total_pages);
       setListUsers(res.data);
     }
   };
-  console.log(listUsers);
+
   return (
     <>
+      <div className="my-3 add-new ">
+        <span>
+          <h4>List Users :</h4>
+        </span>
+        <button
+          className="btn btn btn-success"
+          onClick={() => setIsShowModalAddNew(true)}
+        >
+          Add new users
+        </button>
+      </div>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -34,18 +55,24 @@ const TableUsers = (props) => {
         <tbody>
           {listUsers &&
             listUsers.length > 0 &&
-            listUsers.map((user) => {
+            listUsers.map((user, index) => {
               return (
-                <tr key={`users-${user.id}`}>
+                <tr key={`users-${index}`}>
                   <td>{user.id}</td>
                   <td>{user.email}</td>
-                  <td>{user.first_name}</td>
-                  <td>{user.last_name}</td>
+                  <td>{user.name}</td>
+                  <td>{user.username}</td>
                 </tr>
               );
             })}
         </tbody>
       </Table>
+
+      <ModalAddNew
+        show={isShowModalAddNew}
+        handleClose={handleClose}
+        handleUpdateTable={handleUpdateTable}
+      />
     </>
   );
 };
