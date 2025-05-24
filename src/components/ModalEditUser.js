@@ -1,33 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 
-import { postCreateUser } from "../services/UserService";
+import { putUpdateUser } from "../services/UserService";
 
-const ModalAddNew = (props) => {
-  const { show, handleClose, handleUpdateTable } = props;
+const ModalEditUser = (props) => {
+  const { show, handleClose, dataUserEdit, handleEditUserFromModal } = props;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
-  const handleAddUser = async () => {
-    let res = await postCreateUser(name, email);
+  const handleEditUser = async () => {
+    let res = await putUpdateUser(name, email, dataUserEdit.id);
     let data = res.data;
     if (data && data.id) {
-      //success
-      handleUpdateTable({ name: name, id: data.id, email: email });
+      // success
+      handleEditUserFromModal({
+        name: name,
+        email: email,
+        id: dataUserEdit.id,
+      });
       handleClose();
       setName("");
       setEmail("");
-      toast.success("Added user success!!!");
+      toast.success("Update user success!!!");
     } else {
       toast.error("An error...");
     }
   };
+
+  useEffect(() => {
+    if (show) {
+      setName(dataUserEdit.name);
+      setEmail(dataUserEdit.email);
+    }
+  }, [dataUserEdit]);
+
   return (
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New User</Modal.Title>
+          <Modal.Title>Edit New User</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
@@ -61,10 +73,10 @@ const ModalAddNew = (props) => {
           </Button>
           <Button
             variant="success"
-            onClick={() => handleAddUser()}
+            onClick={() => handleEditUser()}
             style={{ padding: "6px 20px" }}
           >
-            Add
+            Apply
           </Button>
         </Modal.Footer>
       </Modal>
@@ -72,4 +84,4 @@ const ModalAddNew = (props) => {
   );
 };
 
-export default ModalAddNew;
+export default ModalEditUser;

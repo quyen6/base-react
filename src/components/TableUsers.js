@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
-import Table from "react-bootstrap/Table";
-import ModalAddNew from "./ModalAddNew";
+import { Button, Table } from "react-bootstrap";
+import _ from "lodash";
+
 import { fetchAllUser } from "../services/UserService";
+import ModalAddNew from "./ModalAddNew";
+import ModalEditUser from "./ModalEditUser";
 
 const TableUsers = (props) => {
   const [listUsers, setListUsers] = useState([]);
+
   const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
 
-  const handleClose = () => {
-    setIsShowModalAddNew(false);
-  };
-
-  const handleUpdateTable = (user) => {
-    setListUsers([...listUsers, user]);
-  };
+  const [isShowModalEditUser, setIsShowModalEditUser] = useState(false);
+  const [dataUserEdit, setDataUserEdit] = useState({});
 
   useEffect(() => {
     // call apis
@@ -30,6 +29,28 @@ const TableUsers = (props) => {
     }
   };
 
+  const handleClose = () => {
+    setIsShowModalAddNew(false);
+    setIsShowModalEditUser(false);
+  };
+
+  const handleUpdateTable = (user) => {
+    setListUsers([...listUsers, user]);
+  };
+
+  const handleEditUser = (user) => {
+    setIsShowModalEditUser(true);
+    setDataUserEdit(user);
+  };
+
+  const handleEditUserFromModal = (user) => {
+    let cloneListUsers = _.cloneDeep(listUsers); // lodash chia làm 2 địa chỉ bộ nhớ khác nhau
+    let index = listUsers.findIndex((item) => item.id === user.id);
+    cloneListUsers[index].name = user.name;
+    cloneListUsers[index].email = user.email;
+
+    setListUsers(cloneListUsers);
+  };
   return (
     <>
       <div className="my-3 add-new ">
@@ -50,6 +71,7 @@ const TableUsers = (props) => {
             <th>Email</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -62,6 +84,15 @@ const TableUsers = (props) => {
                   <td>{user.email}</td>
                   <td>{user.name}</td>
                   <td>{user.username}</td>
+                  <td className="actions-btn">
+                    <Button
+                      variant="warning"
+                      onClick={() => handleEditUser(user)}
+                    >
+                      Edit
+                    </Button>
+                    <Button variant="danger">Delete</Button>
+                  </td>
                 </tr>
               );
             })}
@@ -72,6 +103,12 @@ const TableUsers = (props) => {
         show={isShowModalAddNew}
         handleClose={handleClose}
         handleUpdateTable={handleUpdateTable}
+      />
+      <ModalEditUser
+        show={isShowModalEditUser}
+        handleClose={handleClose}
+        dataUserEdit={dataUserEdit}
+        handleEditUserFromModal={handleEditUserFromModal}
       />
     </>
   );
