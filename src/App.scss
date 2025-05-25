@@ -13,6 +13,22 @@ code {
 }
 
 .app-container {
+  // TableUsers
+  .sort-name-icons i,
+  .sort-id i {
+    padding: 5px;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
+  .sort-name-icons i:hover,
+  .sort-id i:hover {
+    cursor: pointer;
+    border-color: rgba(0, 0, 0, 0.166);
+    border-radius: 4px;
+    animation: all 0.25s linear;
+    opacity: 0.8;
+  }
+
   .add-new {
     display: flex;
     justify-content: space-between;
@@ -22,5 +38,6 @@ code {
     display: flex;
     align-items: center;
     gap: 20px;
+    height: auto;
   }
 }

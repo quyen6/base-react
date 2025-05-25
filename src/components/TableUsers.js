@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import _ from "lodash";
 
+import FontAwesomeIcon from "@fortawesome/fontawesome-free";
+
 import { fetchAllUser } from "../services/UserService";
 import ModalAddNew from "./ModalAddNew";
 import ModalEditUser from "./ModalEditUser";
@@ -17,6 +19,9 @@ const TableUsers = (props) => {
 
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
   const [dataUserDelete, setDataUserDelete] = useState({});
+
+  const [sortBy, setSortBy] = useState("asc");
+  const [sortField, setSortField] = useState("id");
 
   useEffect(() => {
     // call apis
@@ -69,6 +74,18 @@ const TableUsers = (props) => {
     setListUsers(cloneListUsers);
   };
 
+  // Sort
+  const handleSort = (sortBy, sortField) => {
+    setSortBy(sortBy);
+    setSortField(sortField);
+
+    let cloneListUsers = _.cloneDeep(listUsers); // lodash chia làm 2 địa chỉ bộ nhớ khác nhau
+    cloneListUsers = _.orderBy(cloneListUsers, [sortField], [sortBy]);
+    console.log("🚀 ~ handleSort ~ cloneListUsers:", cloneListUsers);
+
+    setListUsers(cloneListUsers);
+  };
+
   return (
     <>
       <div className="my-3 add-new ">
@@ -85,9 +102,36 @@ const TableUsers = (props) => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>
+              ID{" "}
+              <span className="sort-id  float-end ">
+                <i
+                  className="fa-solid fa-arrow-up "
+                  onClick={() => handleSort("asc", "id")}
+                ></i>
+
+                <i
+                  className="fa-solid fa-arrow-down"
+                  onClick={() => {
+                    handleSort("desc", "id");
+                  }}
+                ></i>
+              </span>
+            </th>
             <th>Email</th>
-            <th>First Name</th>
+            <th>
+              First Name{" "}
+              <span className="sort-name-icons  float-end">
+                <i
+                  className="fa-solid fa-arrow-down-a-z  "
+                  onClick={() => handleSort("asc", "name")}
+                ></i>{" "}
+                <i
+                  className="fa-solid fa-arrow-down-z-a"
+                  onClick={() => handleSort("desc", "name")}
+                ></i>
+              </span>
+            </th>
             <th>Last Name</th>
             <th>Actions</th>
           </tr>
