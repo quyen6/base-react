@@ -11,6 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.table > thead {
+  vertical-align: top !important;
+}
 
 .app-container {
   // TableUsers
