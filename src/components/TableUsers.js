@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import _ from "lodash";
 
-import FontAwesomeIcon from "@fortawesome/fontawesome-free";
-
 import { fetchAllUser } from "../services/UserService";
 import ModalAddNew from "./ModalAddNew";
 import ModalEditUser from "./ModalEditUser";
@@ -22,6 +20,9 @@ const TableUsers = (props) => {
 
   const [sortBy, setSortBy] = useState("asc");
   const [sortField, setSortField] = useState("id");
+
+  // Search
+  const [searchWord, setSearchWord] = useState("");
 
   useEffect(() => {
     // call apis
@@ -86,6 +87,21 @@ const TableUsers = (props) => {
     setListUsers(cloneListUsers);
   };
 
+  // Search
+  const handleSearch = _.debounce((e) => {
+    let term = e.target.value;
+    if (term) {
+      let cloneListUsers = _.cloneDeep(listUsers); // lodash chia làm 2 địa chỉ bộ nhớ khác nhau
+      cloneListUsers = cloneListUsers.filter((item) =>
+        item.name.toLowerCase().includes(term)
+      );
+      setListUsers(cloneListUsers);
+    } else {
+      // input not word
+      getUsers();
+    }
+  }, 500);
+
   return (
     <>
       <div className="my-3 add-new ">
@@ -98,6 +114,14 @@ const TableUsers = (props) => {
         >
           Add new users
         </button>
+      </div>
+      <div className="col-4 mb-3">
+        <input
+          // value={searchWord}
+          className="form-control "
+          placeholder="Search user by name..."
+          onChange={(e) => handleSearch(e)}
+        />
       </div>
       <Table striped bordered hover>
         <thead>
