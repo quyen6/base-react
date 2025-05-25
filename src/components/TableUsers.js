@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import _ from "lodash";
+import { CSVLink } from "react-csv";
 
 import { fetchAllUser } from "../services/UserService";
 import ModalAddNew from "./ModalAddNew";
@@ -21,8 +22,10 @@ const TableUsers = (props) => {
   const [sortBy, setSortBy] = useState("asc");
   const [sortField, setSortField] = useState("id");
 
+  const [dataExport, setDataExport] = useState([]);
+
   // Search
-  const [searchWord, setSearchWord] = useState("");
+  // const [searchWord, setSearchWord] = useState("");
 
   useEffect(() => {
     // call apis
@@ -102,18 +105,52 @@ const TableUsers = (props) => {
     }
   }, 500);
 
+  const getUsersExport = (event, done) => {
+    let result = [];
+    if (listUsers && listUsers.length > 0) {
+      result.push(["ID", "Email", "First Name", "Last Name"]);
+      listUsers.map((item, index) => {
+        let arr = [];
+        arr[0] = item.id;
+        arr[1] = item.email;
+        arr[2] = item.name;
+        arr[3] = item.username;
+        result.push(arr);
+      });
+      setDataExport(result);
+      done();
+    }
+  };
   return (
     <>
-      <div className="my-3 add-new ">
+      <div className="my-3 header-content ">
         <span>
           <h4>List Users :</h4>
         </span>
-        <button
-          className="btn btn btn-success"
-          onClick={() => setIsShowModalAddNew(true)}
-        >
-          Add new users
-        </button>
+        <div className="roles-btn d-flex ">
+          <label htmlFor="import" className="btn btn-secondary item-role">
+            <i className="fa-solid fa-cloud-arrow-up"></i> Import
+          </label>
+          <input type="file" id="import" className="d-none" />
+          <input type="file" id="import" className="d-none" />
+          <CSVLink
+            className="btn btn-primary mx-2 item-role   "
+            filename={"users.csv"}
+            target="_blank"
+            data={dataExport}
+            asyncOnClick={true}
+            onClick={getUsersExport}
+          >
+            <i className="fa-solid fa-cloud-arrow-down"></i>Export
+          </CSVLink>
+
+          <button
+            className="btn btn btn-success item-role  "
+            onClick={() => setIsShowModalAddNew(true)}
+          >
+            <i className="fa-solid fa-circle-plus "></i>Add new
+          </button>
+        </div>
       </div>
       <div className="col-4 mb-3">
         <input

@@ -14,6 +14,17 @@ code {
 
 .app-container {
   // TableUsers
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .item-role {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
   .sort-name-icons i,
   .sort-id i {
     padding: 5px;
@@ -29,11 +40,6 @@ code {
     opacity: 0.8;
   }
 
-  .add-new {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
   .actions-btn {
     display: flex;
     align-items: center;
