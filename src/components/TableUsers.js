@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Table } from "react-bootstrap";
+import { Button, Form, Table } from "react-bootstrap";
 import _ from "lodash";
 import { CSVLink } from "react-csv";
 import Papa from "papaparse";
@@ -222,7 +222,8 @@ const TableUsers = (props) => {
           </button>
         </div>
       </div>
-      <div className="col-4 mb-3">
+      {/* // Search input  */}
+      <div className="col-md-4 mb-3">
         <input
           // value={searchWord}
           className="form-control "
@@ -230,6 +231,22 @@ const TableUsers = (props) => {
           onChange={(e) => handleSearch(e)}
         />
       </div>
+      {/* // Option Sort in mobile */}
+      <div className="col-md-4 mb-3 sort-option-mobile  ">
+        <Form.Select
+          aria-label="Default select example"
+          onChange={(e) => {
+            const [order, sortBy] = e.target.value.split("-");
+            handleSort(order, sortBy);
+          }}
+        >
+          <option value="asc-id">Sort ID from Low to High</option>
+          <option value="desc-id">Sort ID from High to Low</option>
+          <option value="asc-name">Sort First Name from A to Z</option>
+          <option value="desc-name">Sort First Name from Z to A</option>
+        </Form.Select>
+      </div>
+
       <Table striped bordered hover>
         <thead className="header-table">
           <tr>
@@ -237,12 +254,12 @@ const TableUsers = (props) => {
               ID{" "}
               <span className="sort-id  float-end ">
                 <i
-                  className="fa-solid fa-arrow-up "
+                  className="fa-solid fa-arrow-up sort-icon "
                   onClick={() => handleSort("asc", "id")}
                 ></i>
 
                 <i
-                  className="fa-solid fa-arrow-down"
+                  className="fa-solid fa-arrow-down sort-icon"
                   onClick={() => {
                     handleSort("desc", "id");
                   }}
@@ -254,11 +271,11 @@ const TableUsers = (props) => {
               First Name{" "}
               <span className="sort-name-icons  float-end">
                 <i
-                  className="fa-solid fa-arrow-down-a-z  "
+                  className="fa-solid fa-arrow-down-a-z sort-icon "
                   onClick={() => handleSort("asc", "name")}
                 ></i>{" "}
                 <i
-                  className="fa-solid fa-arrow-down-z-a"
+                  className="fa-solid fa-arrow-down-z-a sort-icon"
                   onClick={() => handleSort("desc", "name")}
                 ></i>
               </span>
@@ -296,7 +313,6 @@ const TableUsers = (props) => {
             })}
         </tbody>
       </Table>
-
       <ModalAddNew
         show={isShowModalAddNew}
         handleClose={handleClose}
@@ -308,7 +324,6 @@ const TableUsers = (props) => {
         dataUserEdit={dataUserEdit}
         handleEditUserFromModal={handleEditUserFromModal}
       />
-
       <ModalConfirm
         show={isShowModalDelete}
         handleClose={handleClose}

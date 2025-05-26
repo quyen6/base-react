@@ -15,6 +15,18 @@ code {
   vertical-align: top !important;
 }
 
+// Header
+.logo-spin {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Container
 .app-container {
   // TableUsers
   .header-content {
@@ -26,6 +38,10 @@ code {
     display: flex;
     align-items: center;
     gap: 5px;
+  }
+
+  .sort-option-mobile {
+    display: none;
   }
 
   .sort-name-icons i,
@@ -48,5 +64,17 @@ code {
     align-items: center;
     gap: 20px;
     height: auto;
+  }
+}
+
+@media (max-width: 1023px) {
+  .app-container {
+    .sort-icon {
+      display: none !important;
+    }
+
+    .sort-option-mobile {
+      display: block;
+    }
   }
 }
