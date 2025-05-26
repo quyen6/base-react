@@ -1,0 +1,89 @@
+.login-container {
+  padding: 50px;
+  text-align: center;
+
+  border-radius: 16px;
+
+  max-width: 50vw;
+  margin: 20px auto;
+
+  .title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .text {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #666565;
+    float: left;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    display: block;
+  }
+  .password-container {
+    width: 100%;
+    position: relative;
+  }
+  .password-container i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px 12px;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    &.active {
+      background-color: #007bff;
+    }
+  }
+  button[disabled="disabled"],
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .go-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 40px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  .go-back i {
+    padding-top: 2px;
+  }
+}
+
+@media (max-width: 767px) {
+  .login-container {
+    padding: 0;
+    max-width: 90vw;
+  }
+}
