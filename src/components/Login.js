@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "./Login.scss";
 import { loginUser } from "../services/UserService";
 import { set } from "lodash";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const { loginContext } = useContext(UserContext);
 
   const handleToggle = () => {
     if (type === "password") {
@@ -23,13 +25,6 @@ const Login = () => {
       setType("password");
     }
   };
-
-  useEffect(() => {
-    let userEmail = localStorage.getItem("user-email");
-    if (userEmail) {
-      navigate("/");
-    }
-  });
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -45,7 +40,7 @@ const Login = () => {
     if (foundUser) {
       setLoading(false);
       toast.success("Login successful!");
-      localStorage.setItem("user-email", email);
+      loginContext(email);
       navigate("/");
     } else {
       setLoading(false);
@@ -53,6 +48,9 @@ const Login = () => {
     }
   };
 
+  const handleGoBack = () => {
+    navigate("/");
+  };
   return (
     <>
       <div className="login-container ">
@@ -87,7 +85,9 @@ const Login = () => {
         </button>
         <div className="go-back">
           <i className="fa-solid fa-chevron-left"></i>
-          <span style={{ fontSize: 15 }}>Go back</span>
+          <span style={{ fontSize: 15 }} onClick={() => handleGoBack()}>
+            Go back
+          </span>
         </div>
       </div>
     </>

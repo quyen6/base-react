@@ -9,7 +9,18 @@ import TableUsers from "./components/TableUsers";
 import Home from "./components/Home";
 import Login from "./components/Login";
 
+import { useContext, useEffect } from "react";
+import { UserContext } from "./context/UserContext";
+
 function App() {
+  const { user, loginContext } = useContext(UserContext);
+  console.log("🚀 ~ App ~ user:", user);
+
+  useEffect(() => {
+    if (localStorage.getItem("user-email")) {
+      loginContext(localStorage.getItem("user-email"));
+    }
+  }, []);
   return (
     <>
       <div className="app-container">
