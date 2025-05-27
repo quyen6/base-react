@@ -1,8 +1,18 @@
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logoApp from "../assets/images/logo192 copy.png";
+import { toast } from "react-toastify";
 
 const Header = (props) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("user-email");
+    navigate("/");
+    toast.success("Logout successful!");
+    // You can also redirect to the login page or home page after logout
+  };
+
   return (
     <>
       <Navbar
@@ -27,7 +37,7 @@ const Header = (props) => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto ">
               <Nav>
-                <NavLink to="/" active className="nav-link">
+                <NavLink to="/" className="nav-link">
                   {/* Add class nav-link's bootstrap   */}
                   Home
                 </NavLink>
@@ -39,8 +49,13 @@ const Header = (props) => {
             </Nav>
             <Nav>
               <NavDropdown title="Setting" id="basic-nav-dropdown ">
-                <NavDropdown.Item href="/login">Login</NavDropdown.Item>
-                <NavDropdown.Item href="/logout">Logout</NavDropdown.Item>
+                <NavLink to="/login" className="dropdown-item">
+                  Login
+                </NavLink>
+
+                <NavDropdown.Item onClick={() => handleLogout()}>
+                  Logout
+                </NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
