@@ -62,7 +62,7 @@ code {
   .actions-btn {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     height: auto;
   }
 }
@@ -76,5 +76,21 @@ code {
     .sort-option-mobile {
       display: block;
     }
+  }
+}
+
+@media screen and (max-width: 739px) {
+}
+.app-container {
+  .header-content {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .actions-btn {
+    flex-wrap: wrap;
+  }
+  button.btn.btn-warning {
+    width: 100% !important;
   }
 }

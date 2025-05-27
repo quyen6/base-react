@@ -247,72 +247,74 @@ const TableUsers = (props) => {
         </Form.Select>
       </div>
 
-      <Table striped bordered hover>
-        <thead className="header-table">
-          <tr>
-            <th>
-              ID{" "}
-              <span className="sort-id  float-end ">
-                <i
-                  className="fa-solid fa-arrow-up sort-icon "
-                  onClick={() => handleSort("asc", "id")}
-                ></i>
+      <div style={{ overflowX: "auto" }}>
+        <Table striped bordered hover className="table-users">
+          <thead className="header-table">
+            <tr>
+              <th>
+                ID{" "}
+                <span className="sort-id  float-end ">
+                  <i
+                    className="fa-solid fa-arrow-up sort-icon "
+                    onClick={() => handleSort("asc", "id")}
+                  ></i>
 
-                <i
-                  className="fa-solid fa-arrow-down sort-icon"
-                  onClick={() => {
-                    handleSort("desc", "id");
-                  }}
-                ></i>
-              </span>
-            </th>
-            <th>Email</th>
-            <th>
-              First Name{" "}
-              <span className="sort-name-icons  float-end">
-                <i
-                  className="fa-solid fa-arrow-down-a-z sort-icon "
-                  onClick={() => handleSort("asc", "name")}
-                ></i>{" "}
-                <i
-                  className="fa-solid fa-arrow-down-z-a sort-icon"
-                  onClick={() => handleSort("desc", "name")}
-                ></i>
-              </span>
-            </th>
-            <th>Last Name</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {listUsers &&
-            listUsers.length > 0 &&
-            listUsers.map((user, index) => {
-              return (
-                <tr key={`users-${index}`}>
-                  <td>{user.id}</td>
-                  <td>{user.email}</td>
-                  <td>{user.name}</td>
-                  <td>{user.username}</td>
-                  <td className="actions-btn">
-                    <Button
-                      variant="warning"
-                      onClick={() => handleEditUser(user)}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleDeleteUser(user)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
+                  <i
+                    className="fa-solid fa-arrow-down sort-icon"
+                    onClick={() => {
+                      handleSort("desc", "id");
+                    }}
+                  ></i>
+                </span>
+              </th>
+              <th>Email</th>
+              <th>
+                First Name{" "}
+                <span className="sort-name-icons  float-end">
+                  <i
+                    className="fa-solid fa-arrow-down-a-z sort-icon "
+                    onClick={() => handleSort("asc", "name")}
+                  ></i>{" "}
+                  <i
+                    className="fa-solid fa-arrow-down-z-a sort-icon"
+                    onClick={() => handleSort("desc", "name")}
+                  ></i>
+                </span>
+              </th>
+              <th>Last Name</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {listUsers &&
+              listUsers.length > 0 &&
+              listUsers.map((user, index) => {
+                return (
+                  <tr key={`users-${index}`}>
+                    <td>{user.id}</td>
+                    <td>{user.email}</td>
+                    <td>{user.name}</td>
+                    <td>{user.username}</td>
+                    <td className="actions-btn">
+                      <Button
+                        variant="warning"
+                        onClick={() => handleEditUser(user)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => handleDeleteUser(user)}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </Table>
+      </div>
       <ModalAddNew
         show={isShowModalAddNew}
         handleClose={handleClose}

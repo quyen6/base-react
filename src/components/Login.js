@@ -32,7 +32,7 @@ const Login = () => {
       return;
     }
     setLoading(true);
-    let res = await loginUser(email, password);
+    let res = await loginUser(email.trim(), password);
     let data = res.data;
 
     const foundUser = data.find((item) => email === item.email);
@@ -58,23 +58,30 @@ const Login = () => {
         <div className="text">
           <strong>Email or Username (Sincere@april.biz) </strong>
         </div>
-        <input
-          type="text"
-          placeholder="Email or Username"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <div className="password-container">
+        <form>
           <input
-            type={type}
-            className="password-input"
-            placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            type="text"
+            placeholder="Email or Username"
+            value={email}
+            autoComplete="username"
+            onChange={(e) => setEmail(e.target.value)}
           />
+          <div className="password-container">
+            <input
+              type={type}
+              className="password-input"
+              placeholder="Enter password"
+              value={password}
+              autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleLogin();
+              }}
+            />
 
-          <i className={icon} onClick={handleToggle}></i>
-        </div>
+            <i className={icon} onClick={handleToggle}></i>
+          </div>
+        </form>
         <button
           className={email && password ? "active" : ""}
           disabled={email && password ? false : true}

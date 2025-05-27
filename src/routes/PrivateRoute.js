@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Route, Routes } from "react-router-dom";
+
 import { UserContext } from "../context/UserContext";
 import { Alert } from "react-bootstrap";
 
@@ -17,6 +17,7 @@ function PrivateRoute(props) {
       </h1>
     );
   }
+
   return <>{props.children}</>;
 }
 
