@@ -76,21 +76,25 @@ code {
     .sort-option-mobile {
       display: block;
     }
+
+    button.btn.btn-warning {
+      width: unset !important;
+    }
   }
 }
 
-@media screen and (max-width: 739px) {
-}
-.app-container {
-  .header-content {
-    flex-wrap: wrap;
-    gap: 10px;
-  }
+@media (max-width: 739px) {
+  .app-container {
+    .header-content {
+      flex-wrap: wrap;
+      gap: 10px;
+    }
 
-  .actions-btn {
-    flex-wrap: wrap;
-  }
-  button.btn.btn-warning {
-    width: 100% !important;
+    .actions-btn {
+      flex-wrap: wrap;
+    }
+    button.btn.btn-warning {
+      width: 100% !important;
+    }
   }
 }
