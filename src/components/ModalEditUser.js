@@ -33,7 +33,7 @@ const ModalEditUser = (props) => {
       setName(dataUserEdit.name);
       setEmail(dataUserEdit.email);
     }
-  }, [dataUserEdit]);
+  }, [dataUserEdit, show]);
 
   return (
     <>

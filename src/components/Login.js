@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import "./Login.scss";
 import { loginUser } from "../services/UserService";
-import { set } from "lodash";
+
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 

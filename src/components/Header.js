@@ -1,14 +1,13 @@
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
 import logoApp from "../assets/images/logo192 copy.png";
 import { UserContext } from "../context/UserContext";
 
 const Header = (props) => {
   const { logout, user } = useContext(UserContext);
-  const [hideheader, setHideHeader] = useState(false);
 
   // useEffect(() => {
   //   if (window.location.pathname === "/login") {

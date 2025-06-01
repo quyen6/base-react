@@ -21,8 +21,8 @@ const TableUsers = (props) => {
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
   const [dataUserDelete, setDataUserDelete] = useState({});
 
-  const [sortBy, setSortBy] = useState("asc");
-  const [sortField, setSortField] = useState("id");
+  const [setSortBy] = useState("asc");
+  const [setSortField] = useState("id");
 
   const [dataExport, setDataExport] = useState([]);
 
