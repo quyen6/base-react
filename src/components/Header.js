@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useContext } from "react";
 
-import logoApp from "../assets/images/logo192 copy.png";
+import logoApp from "../assets/images/logo.png";
 import { UserContext } from "../context/UserContext";
 
 const Header = (props) => {
