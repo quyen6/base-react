@@ -164,7 +164,7 @@ const TableUsers = (props) => {
                 toast.error("Wrong format CSV file!");
               } else {
                 let result = [];
-                rawCSV.map((item, index) => {
+                rawCSV.forEach((item, index) => {
                   if (index > 0 && item.length === 3) {
                     let obj = {};
                     obj.email = item[0];
