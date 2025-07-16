@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 // @function  UserContext
 const UserContext = React.createContext({ email: "", auth: false });
@@ -8,13 +8,12 @@ const UserContext = React.createContext({ email: "", auth: false });
 const UserProvider = ({ children }) => {
   const [user, setUser] = React.useState({ email: "", auth: false });
 
-  const loginContext = (email) => {
-    setUser((user) => ({
+  const loginContext = useCallback((email) => {
+    setUser({
       email: email,
       auth: true,
-    }));
-    localStorage.setItem("user-email", email);
-  };
+    });
+  }, []);
 
   const logout = () => {
     localStorage.removeItem("user-email");
