@@ -12,7 +12,7 @@ import ModalConfirm from "./ModalConfirm";
 
 const TableUsers = (props) => {
   const [listUsers, setListUsers] = useState([]);
-
+  const [originalListUsers, setOriginalListUsers] = useState([]);
   const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
 
   const [isShowModalEditUser, setIsShowModalEditUser] = useState(false);
@@ -21,8 +21,8 @@ const TableUsers = (props) => {
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
   const [dataUserDelete, setDataUserDelete] = useState({});
 
-  const [setSortBy] = useState("asc");
-  const [setSortField] = useState("id");
+  const [, setSortBy] = useState("asc");
+  const [, setSortField] = useState("id");
 
   const [dataExport, setDataExport] = useState([]);
 
@@ -41,6 +41,7 @@ const TableUsers = (props) => {
       // setTotalUsers(res.total);
       // setTotalPages(res.total_pages);
       setListUsers(res.data);
+      setOriginalListUsers(res.data);
     }
   };
 
@@ -87,23 +88,22 @@ const TableUsers = (props) => {
 
     let cloneListUsers = _.cloneDeep(listUsers); // lodash chia làm 2 địa chỉ bộ nhớ khác nhau
     cloneListUsers = _.orderBy(cloneListUsers, [sortField], [sortBy]);
-    console.log("🚀 ~ handleSort ~ cloneListUsers:", cloneListUsers);
+    // console.log("🚀 ~ handleSort ~ cloneListUsers:", cloneListUsers);
 
     setListUsers(cloneListUsers);
   };
 
   // Search
   const handleSearch = _.debounce((e) => {
-    let term = e.target.value;
+    const term = e.target.value.toLowerCase();
     if (term) {
-      let cloneListUsers = _.cloneDeep(listUsers); // lodash chia làm 2 địa chỉ bộ nhớ khác nhau
-      cloneListUsers = cloneListUsers.filter((item) =>
-        item.name.toLowerCase().includes(term)
+      const cloneList = _.cloneDeep(originalListUsers);
+      const filtered = cloneList.filter((user) =>
+        user.name.toLowerCase().includes(term)
       );
-      setListUsers(cloneListUsers);
+      setListUsers(filtered);
     } else {
-      // input not word
-      getUsers();
+      setListUsers(originalListUsers);
     }
   }, 500);
 

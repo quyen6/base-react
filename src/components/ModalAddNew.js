@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 
@@ -23,6 +23,12 @@ const ModalAddNew = (props) => {
       toast.error("An error...");
     }
   };
+  useEffect(() => {
+    if (show) {
+      setName("");
+      setEmail("");
+    }
+  }, [show]);
   return (
     <>
       <Modal

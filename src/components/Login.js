@@ -32,10 +32,11 @@ const Login = () => {
       return;
     }
     setLoading(true);
-    let res = await loginUser(email.trim(), password);
+    const emailTrimmed = email.trim();
+    let res = await loginUser(emailTrimmed, password);
     let data = res.data;
 
-    const foundUser = data.find((item) => email === item.email);
+    const foundUser = data.find((item) => emailTrimmed === item.email);
 
     if (foundUser) {
       setLoading(false);

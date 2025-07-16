@@ -15,7 +15,7 @@ function App() {
     if (localStorage.getItem("user-email")) {
       loginContext(localStorage.getItem("user-email"));
     }
-  }, [loginContext]);
+  }, []);
   return (
     <>
       <div className="app-container">
